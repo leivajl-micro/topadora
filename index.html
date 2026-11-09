@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Topadora IDE</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/python_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/msg/en.js"></script> 
+    
+    <script src="bloques_topadora.js"></script>
+</head>
+<body>
+    <div id="topBar">
+        <button onclick="guardarXML()">💾 Guardar</button>
+        <input type="file" id="fileInput" style="display: none;" onchange="cargarXML(event)" accept=".xml">
+        <button onclick="document.getElementById('fileInput').click()">📂 Cargar</button>
+        <button id="btnCargar" onclick="enviarCodigo()" style="float:right; background:#4CAF50; color:white;">🚀 Subir al Robot</button>
+    </div>
+
+    <div id="blocklyDiv"></div>
+
+    <xml id="toolbox" style="display: none">
+        <category name="Movement" colour="230">
+            <block type="topadora_motor">
+                <value name="VELOCIDAD"><shadow type="math_number"><field name="NUM">100</field></shadow></value>
+            </block>
+            <block type="topadora_mover_pala">
+                <value name="POSICION"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+            </block>
+            <block type="topadora_mover_pinza">
+                <value name="POSICION"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+            </block>
+        </category>
+
+        <category name="Lights & Sound" colour="160">
+            <block type="topadora_led">
+                <value name="R"><shadow type="math_number"><field name="NUM">255</field></shadow></value>
+                <value name="G"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+                <value name="B"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+            </block>
+            <block type="topadora_tono">
+                <value name="FRECUENCIA"><shadow type="math_number"><field name="NUM">440</field></shadow></value>
+                <value name="DURACION"><shadow type="math_number"><field name="NUM">500</field></shadow></value>
+            </block>
+        </category>
+
+        <category name="Sensors" colour="65">
+            <block type="topadora_leer_linea"></block>
+            <block type="topadora_leer_distancia"></block>
+        </category>
+
+        <category name="Logic" colour="210">
+            <block type="controls_if"></block>
+            <block type="logic_compare"></block>
+            <block type="logic_operation"></block>
+            <block type="logic_negate"></block>
+            <block type="logic_boolean"></block>
+            <block type="topadora_high_low"></block>
+        </category>
+
+        <category name="Control" colour="120">
+            <block type="topadora_esperar">
+                <value name="SEGUNDOS"><shadow type="math_number"><field name="NUM">1</field></shadow></value>
+            </block>
+            <block type="controls_repeat_ext">
+                <value name="TIMES"><shadow type="math_number"><field name="NUM">10</field></shadow></value>
+            </block>
+            <block type="controls_whileUntil"></block>
+        </category>
+
+        <category name="Math" colour="230">
+            <block type="math_number"><field name="NUM">0</field></block>
+            <block type="math_arithmetic">
+                <value name="A"><shadow type="math_number"><field name="NUM">1</field></shadow></value>
+                <value name="B"><shadow type="math_number"><field name="NUM">1</field></shadow></value>
+            </block>
+            <block type="math_random_int">
+                <value name="FROM"><shadow type="math_number"><field name="NUM">1</field></shadow></value>
+                <value name="TO"><shadow type="math_number"><field name="NUM">100</field></shadow></value>
+            </block>
+        </category>
+
+        <category name="Variables" colour="330" custom="VARIABLE"></category>
+    </xml>
+    <script src="app.js"></script>
+</body>
+</html>
