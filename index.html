@@ -8,10 +8,11 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
 
-    <script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
-    <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
-    <script src="https://unpkg.com/blockly/python_compressed.js"></script>
-    <script src="https://unpkg.com/blockly/msg/en.js"></script> 
+    <!-- Versión fija de Blockly para estabilidad permanente -->
+    <script src="https://unpkg.com/blockly@10.4.3/blockly_compressed.js"></script>
+    <script src="https://unpkg.com/blockly@10.4.3/blocks_compressed.js"></script>
+    <script src="https://unpkg.com/blockly@10.4.3/python_compressed.js"></script>
+    <script src="https://unpkg.com/blockly@10.4.3/msg/en.js"></script> 
     
     <script src="bloques_topadora.js"></script>
 </head>
@@ -20,7 +21,7 @@
         <button onclick="guardarXML()">💾 Guardar</button>
         <input type="file" id="fileInput" style="display: none;" onchange="cargarXML(event)" accept=".xml">
         <button onclick="document.getElementById('fileInput').click()">📂 Cargar</button>
-        <button id="btnCargar" onclick="enviarCodigo()" style="float:right; background:#4CAF50; color:white;">🚀 Subir al Robot</button>
+        <button id="btnCargar" onclick="enviarCodigo()" style="float:right; background:#4CAF50; color:white;"> Subir al Robot</button>
     </div>
 
     <div id="blocklyDiv"></div>
@@ -65,6 +66,9 @@
         </category>
 
         <category name="Control" colour="120">
+            <!-- Nuestro nuevo bloque de Bucle Principal -->
+            <block type="topadora_loop"></block>
+            
             <block type="topadora_esperar">
                 <value name="SEGUNDOS"><shadow type="math_number"><field name="NUM">1</field></shadow></value>
             </block>
@@ -89,5 +93,13 @@
         <category name="Variables" colour="330" custom="VARIABLE"></category>
     </xml>
     <script src="app.js"></script>
+
+    <!-- Activación del Service Worker para PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+            .then(() => console.log("Service Worker registrado."));
+        }
+    </script>
 </body>
 </html>
