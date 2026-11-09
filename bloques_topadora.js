@@ -110,7 +110,7 @@ Blockly.Blocks['topadora_loop'] = {
         this.setPreviousStatement(true, null);
         this.setNextStatement(false, null); // Sin conector inferior
         this.setColour(120);
-        this.setTooltip("Se repite infinitamente, equivalente al void loop() de Arduino.");
+        //this.setTooltip("Se repite infinitamente, equivalente al void loop() de Arduino.");
     }
 };
 
