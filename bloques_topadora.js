@@ -1,8 +1,12 @@
+// ==========================================
+// DEFINICIÓN DE BLOQUES VISUALES
+// ==========================================
+
 Blockly.Blocks['topadora_motor'] = {
     init: function() {
         this.appendValueInput("VELOCIDAD")
             .setCheck("Number")
-            .appendField("⚙️ Motor")
+            .appendField(" Motor")
             .appendField(new Blockly.FieldDropdown([["IZQ","izq"], ["DER","der"]]), "MOTOR")
             .appendField("PWM:");
         this.appendDummyInput().appendField("%");
@@ -15,7 +19,7 @@ Blockly.Blocks['topadora_motor'] = {
 
 Blockly.Blocks['topadora_mover_pala'] = {
     init: function() {
-        this.appendValueInput("POSICION").setCheck("Number").appendField("🏗️ Pala a");
+        this.appendValueInput("POSICION").setCheck("Number").appendField(" Pala a");
         this.appendDummyInput().appendField("%");
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
@@ -26,7 +30,7 @@ Blockly.Blocks['topadora_mover_pala'] = {
 
 Blockly.Blocks['topadora_mover_pinza'] = {
     init: function() {
-        this.appendValueInput("POSICION").setCheck("Number").appendField("🗜️ Pinza a");
+        this.appendValueInput("POSICION").setCheck("Number").appendField(" Pinza a");
         this.appendDummyInput().appendField("%");
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
@@ -38,7 +42,7 @@ Blockly.Blocks['topadora_mover_pinza'] = {
 Blockly.Blocks['topadora_led'] = {
     init: function() {
         this.appendDummyInput()
-            .appendField("💡 LED N°")
+            .appendField(" LED N°")
             .appendField(new Blockly.FieldNumber(0, 0, 3, 1), "INDICE");
         this.appendValueInput("R").setCheck("Number").appendField("R:");
         this.appendValueInput("G").setCheck("Number").appendField("G:");
@@ -52,7 +56,7 @@ Blockly.Blocks['topadora_led'] = {
 
 Blockly.Blocks['topadora_tono'] = {
     init: function() {
-        this.appendValueInput("FRECUENCIA").setCheck("Number").appendField("🎵 Tono");
+        this.appendValueInput("FRECUENCIA").setCheck("Number").appendField(" Tono");
         this.appendValueInput("DURACION").setCheck("Number").appendField("Hz por");
         this.appendDummyInput().appendField("ms");
         this.setInputsInline(true);
@@ -64,7 +68,7 @@ Blockly.Blocks['topadora_tono'] = {
 
 Blockly.Blocks['topadora_esperar'] = {
     init: function() {
-        this.appendValueInput("SEGUNDOS").setCheck("Number").appendField("⏳ Delay");
+        this.appendValueInput("SEGUNDOS").setCheck("Number").appendField(" Delay");
         this.appendDummyInput().appendField("s");
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
@@ -76,7 +80,7 @@ Blockly.Blocks['topadora_esperar'] = {
 Blockly.Blocks['topadora_leer_linea'] = {
     init: function() {
         this.appendDummyInput()
-            .appendField("👁️ Línea")
+            .appendField(" Línea")
             .appendField(new Blockly.FieldDropdown([["IZQ","izq"], ["DER","der"]]), "SENSOR");
         this.setOutput(true, "Number");
         this.setColour(65);
@@ -85,7 +89,7 @@ Blockly.Blocks['topadora_leer_linea'] = {
 
 Blockly.Blocks['topadora_leer_distancia'] = {
     init: function() {
-        this.appendDummyInput().appendField("📏 Distancia Láser");
+        this.appendDummyInput().appendField(" Distancia Láser");
         this.setOutput(true, "Number");
         this.setColour(65);
     }
@@ -99,7 +103,20 @@ Blockly.Blocks['topadora_high_low'] = {
     }
 };
 
-// --- GENERADORES PYTHON ---
+Blockly.Blocks['topadora_loop'] = {
+    init: function() {
+        this.appendDummyInput().appendField(" Bucle Principal (Loop)");
+        this.appendStatementInput("DO").setCheck(null);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(false, null); // Sin conector inferior
+        this.setColour(120);
+        this.setTooltip("Se repite infinitamente, equivalente al void loop() de Arduino.");
+    }
+};
+
+// ==========================================
+// GENERADORES MICROPYTHON
+// ==========================================
 
 Blockly.Python.forBlock['topadora_motor'] = function(block, generator) {
     var motor = block.getFieldValue('MOTOR');
@@ -157,4 +174,9 @@ Blockly.Python.forBlock['topadora_leer_distancia'] = function(block, generator) 
 Blockly.Python.forBlock['topadora_high_low'] = function(block, generator) {
     var estado = block.getFieldValue('ESTADO');
     return [estado, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.forBlock['topadora_loop'] = function(block, generator) {
+    var branch = generator.statementToCode(block, 'DO') || '  pass\n';
+    return 'while True:\n' + branch;
 };
