@@ -1,5 +1,5 @@
 {
-  "name": "Topadora Blockly",
+  "name": "Topadora",
   "short_name": "Topadora",
   "description": "Entorno de programación en bloques para robot",
   "start_url": "./index.html",
